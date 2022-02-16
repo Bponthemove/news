@@ -1,0 +1,147 @@
+//--------fonts----------//
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Work+Sans&display=swap');
+
+//--------resets---------//
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html{
+    font-family: 'Nunito Sans', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+//--------colors---------//
+$color-white: #FFFFFF;
+$color-lightgrey: #FAF9F9;
+$color-grey: #F5F4F4;
+$color-darkgrey: #F0EEEE;
+$color-lightred: #f87b7b;
+$color-red: #ff002b;
+$color-darkred: #c00021;
+$color-lightblue: #00a8e8;
+$color-blue: #407ba7;
+$color-darkblue: #004e89;
+$color-lightgreen: #70e000;
+$color-green: #38b000;
+$color-darkgreen: #008000;
+$color-black: #00171f;
+
+$themes: (
+    light: (
+        color-fontOne: #FFFFFF,
+        color-fontTwo: #00171f,
+        color-backgroundOne: #FFFFFF,
+        color-backgroundTwo: #FAF9F9,
+        color-backgroundThree: #407ba7,
+        color-backgroundMenu: #407ba7,
+        color-backgroundMenuHover: #004e89,
+        color-backgroundButtonRed: #ff002b,
+        color-backgroundListHover: #f3f5fd,
+        color-backgroundButtonBlue: #407ba7,
+        color-backgroundButtonWhite: #FFFFFF,
+        color-border: #00171f,
+    ),
+    dark: (
+        color-fontOne: #00171f,
+        color-fontTwo: #FFFFFF,
+        color-backgroundOne: #00171f,
+        color-backgroundTwo: #495057,
+        color-backgroundThree: #dee2e6,
+        color-backgroundMenu: #6c757d,
+        color-backgroundMenuHover: #f87b7b,
+        color-backgroundButtonRed: #c00021,
+        color-backgroundListHover: #f87b7b,
+        color-backgroundButtonBlue: #FFFFFF,
+        color-backgroundButtonWhite: #00171f,
+        color-border: #FFFFFF,
+    )
+);
+
+//-------mixins----------//
+@mixin theme($key, $color) {
+    @each $theme-name, $theme-color in $themes {
+        .theme-#{$theme-name} & {
+            #{$key}: map-get(map-get($themes, $theme-name), $color)
+        }
+    }
+}
+
+@mixin on-hover {
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin breakpoint($point) {
+    @if $point == desktop {
+      @media (min-width: 70em) { @content ; }
+   }
+    @else if $point == laptop {
+      @media (min-width: 64em) { @content ; }
+   }
+     @else if $point == tablet {
+      @media (min-width: 50em) { @content ; }
+   }
+    @else if $point == phablet {
+      @media (min-width: 35em)  { @content ; }
+   }
+   @else if $point == mobileonly {
+      @media (max-width: 35em)  { @content ; }
+ 
+   }
+ }
+
+//--------buttons-------//
+.button{
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.button-big{
+    @extend .button;
+    font-size: 0.8em;
+    padding: 0.8em 2em;
+}
+
+
+.button-small{
+    @extend .button;
+    font-size: 0.5em;
+    padding: 0.5em 1.25em;
+}
+
+.button-round{
+    @extend .button;
+    border-radius: 50%;
+    padding: 0.8em;
+}
+
+.button-red{
+    @extend .button;
+    @include theme('background', 'color-backgroundButtonRed' );
+    color: $color-white;
+}
+
+.button-blue{
+    @extend .button;
+    @include theme('background', 'color-backgroundButtonBlue' );
+    @include theme('color', 'color-fontOne');
+}
+
+
+
+
+

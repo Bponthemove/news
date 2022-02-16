@@ -1,0 +1,488 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Work+Sans&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Nunito Sans', sans-serif;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.button, .button-big, .button-small, .button-round, .button-red, .button-blue {
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-big {
+  font-size: 0.8em;
+  padding: 0.8em 2em;
+}
+
+.button-small {
+  font-size: 0.5em;
+  padding: 0.5em 1.25em;
+}
+
+.button-round {
+  border-radius: 50%;
+  padding: 0.8em;
+}
+
+.button-red {
+  color: #FFFFFF;
+}
+
+.theme-light .button-red {
+  background: #ff002b;
+}
+
+.theme-dark .button-red {
+  background: #c00021;
+}
+
+.theme-light .button-blue {
+  background: #407ba7;
+}
+
+.theme-dark .button-blue {
+  background: #FFFFFF;
+}
+
+.theme-light .button-blue {
+  color: #FFFFFF;
+}
+
+.theme-dark .button-blue {
+  color: #00171f;
+}
+
+.App {
+  height: 100vh;
+}
+
+.theme-light .App {
+  background: #FAF9F9;
+}
+
+.theme-dark .App {
+  background: #495057;
+}
+
+@media (min-width: 50em) {
+  .App {
+    height: 90vh;
+    max-width: 600px;
+    margin: 2em auto;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+  }
+  .theme-light .App {
+    border-color: #00171f;
+  }
+  .theme-dark .App {
+    border-color: #FFFFFF;
+  }
+}
+
+.theme-light .App .header {
+  background: #FFFFFF;
+}
+
+.theme-dark .App .header {
+  background: #00171f;
+}
+
+.App .header > h1 {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.theme-light .App .header > h1 {
+  color: #00171f;
+}
+
+.theme-dark .App .header > h1 {
+  color: #FFFFFF;
+}
+
+.App .header .button-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 0.2em 0;
+}
+
+.theme-light .App .header .button-container {
+  background: #407ba7;
+}
+
+.theme-dark .App .header .button-container {
+  background: #6c757d;
+}
+
+.App .header .button-container .dropdown {
+  position: relative;
+}
+
+.App .header .button-container .dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  left: -15px;
+  min-width: 125px;
+  -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 168, 232, 0.2);
+          box-shadow: 0px 2px 4px 0px rgba(0, 168, 232, 0.2);
+  z-index: 1;
+}
+
+@media (min-width: 35em) {
+  .App .header .button-container .dropdown .dropdown-content {
+    min-width: 160px;
+    left: -30px;
+  }
+}
+
+.App .header .button-container .dropdown .dropdown-content .menu-item-container {
+  position: relative;
+}
+
+.App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
+  position: absolute;
+  left: 5px;
+  top: 8px;
+}
+
+.theme-light .App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
+  color: #FFFFFF;
+}
+
+.theme-dark .App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
+  color: #00171f;
+}
+
+@media (min-width: 35em) {
+  .App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
+    left: 15px;
+  }
+}
+
+.App .header .button-container .dropdown .dropdown-content > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.App .header .button-container .dropdown .dropdown-content > div > button {
+  border-radius: 0;
+}
+
+.theme-light .App .header .button-container .dropdown .dropdown-content > div > button {
+  background: #407ba7;
+}
+
+.theme-dark .App .header .button-container .dropdown .dropdown-content > div > button {
+  background: #dee2e6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-light .App .header .button-container .dropdown .dropdown-content > div > button:hover {
+    background-color: #004e89;
+  }
+  .theme-dark .App .header .button-container .dropdown .dropdown-content > div > button:hover {
+    background-color: #f87b7b;
+  }
+}
+
+.App .header .button-container .dropdown .dropdown-content > div > .check-icon {
+  position: absolute;
+}
+
+.App .header .button-container .dropdown .dropdown-content-visible-onclick {
+  display: inline-block;
+}
+
+@media (min-width: 35em) and (hover: hover) and (pointer: fine) {
+  .App .header .button-container .dropdown:hover .dropdown-content {
+    display: inline-block;
+  }
+}
+
+.App .header > form {
+  padding: 0.3em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 8fr 2fr 3fr;
+      grid-template-columns: 8fr 2fr 3fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: start;
+}
+
+@media (min-width: 35em) {
+  .App .header > form {
+    padding: 0.3em 2em;
+  }
+}
+
+.App .header > form .search {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+.App .header > form .button, .App .header > form .button-big, .App .header > form .button-small, .App .header > form .button-round, .App .header > form .button-red, .App .header > form .button-blue {
+  margin-left: 0.3em;
+}
+
+.App .header > form .input-container {
+  font-size: 0.6em;
+}
+
+.theme-light .App .header > form .input-container {
+  color: #00171f;
+}
+
+.theme-dark .App .header > form .input-container {
+  color: #FFFFFF;
+}
+
+@media (min-width: 35em) {
+  .App .header > form .input-container {
+    font-size: 0.8em;
+  }
+}
+
+.App .header > form .input-container label {
+  position: relative;
+}
+
+.App .header > form .input-container input {
+  display: none;
+}
+
+.App .header > form .input-container span {
+  cursor: pointer;
+}
+
+.App .header > form .input-container span::after, .App .header > form .input-container span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.App .header > form .input-container span::before {
+  left: 30px;
+  width: 45px;
+  height: 25px;
+  border-radius: 50px;
+}
+
+.theme-light .App .header > form .input-container span::before {
+  background-color: #407ba7;
+}
+
+.theme-dark .App .header > form .input-container span::before {
+  background-color: #FFFFFF;
+}
+
+.App .header > form .input-container span::after {
+  left: 33px;
+  width: 17px;
+  height: 17px;
+  border-radius: 10px;
+  -webkit-transition: left 0.25s;
+  transition: left 0.25s;
+}
+
+.theme-light .App .header > form .input-container span::after {
+  background-color: #FFFFFF;
+}
+
+.theme-dark .App .header > form .input-container span::after {
+  background-color: #00171f;
+}
+
+.App .header > form .input-container input:checked + label > span::after {
+  left: 55px;
+}
+
+.App main {
+  padding: 0.8em;
+}
+
+.App main > p {
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.theme-light .App main > p {
+  color: #00171f;
+}
+
+.theme-dark .App main > p {
+  color: #FFFFFF;
+}
+
+.App main > ul {
+  height: 78vh;
+  overflow-y: auto;
+}
+
+@media (min-width: 35em) {
+  .App main > ul {
+    height: 74vh;
+  }
+}
+
+.App main > ul .list-item {
+  padding: 0.4em;
+  margin: 0.2em 0;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  pointer-events: none;
+}
+
+.theme-light .App main > ul .list-item {
+  background: #FAF9F9;
+}
+
+.theme-dark .App main > ul .list-item {
+  background: #495057;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-light .App main > ul .list-item:hover {
+    background-color: #f3f5fd;
+  }
+  .theme-dark .App main > ul .list-item:hover {
+    background-color: #f87b7b;
+  }
+}
+
+.App main > ul .list-item .text-container {
+  text-decoration: none;
+  -webkit-box-flex: 2.75;
+      -ms-flex: 2.75;
+          flex: 2.75;
+  padding-right: 0.9em;
+  pointer-events: auto;
+}
+
+.theme-light .App main > ul .list-item .text-container {
+  color: #00171f;
+}
+
+.theme-dark .App main > ul .list-item .text-container {
+  color: #FFFFFF;
+}
+
+.App main > ul .list-item .text-container > h2 {
+  font-size: 1em;
+}
+
+.App main > ul .list-item .text-container > p {
+  font-size: 0.7em;
+}
+
+.App main > ul .list-item .img-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  height: 70px;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+.App main > ul > p {
+  text-align: center;
+  font-size: 2em;
+}
+
+.theme-light .App main > ul > p {
+  color: #00171f;
+}
+
+.theme-dark .App main > ul > p {
+  color: #FFFFFF;
+}
+
+.theme-light .App main > ul > li:nth-child(2n+1) {
+  background-color: #FFFFFF;
+}
+
+.theme-dark .App main > ul > li:nth-child(2n+1) {
+  background-color: #00171f;
+}
+
+.App main .more-posts-btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0s;
+  transition: height 0s;
+}
+
+@media (min-width: 35em) {
+  .App main .more-posts-btn-container {
+    bottom: 67px;
+  }
+}
+
+.App main .show-btn {
+  height: 2.5em;
+  -webkit-transition: height 0.3s;
+  transition: height 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .App main .show-btn .more-posts-btn:hover {
+    background-color: #f87b7b;
+  }
+}
+
+.App main .show-btn .more-posts-btn span {
+  display: inline-block;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  font-weight: 900;
+}
+/*# sourceMappingURL=App.css.map */
