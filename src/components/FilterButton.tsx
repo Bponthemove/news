@@ -19,14 +19,14 @@ export const FilterButton = () => {
         setClicked(true)
         setId(e.currentTarget.id)
     }
-
+    
     return(
         <>
             { filterOptions.map(option => (
                 <div 
                     id= { option }   
                     key={ option }
-                    onClick={ clickHandler }
+                    onClick={ window.matchMedia("(max-width: 600px)").matches ? clickHandler : undefined }
                     className='dropdown'
                 >
                     <button 

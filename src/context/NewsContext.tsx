@@ -19,13 +19,10 @@ type all = {
     morePostsHandler: () => void ;
     scrollHandler: (e: React.UIEvent<HTMLUListElement>) => void;
     data: {
-      url: string,
+      link: string,
       title: string,
-      source: {
-      id: string | null,
-      name: string,
-      },
-      urlToImage: string,
+      clean_url: string,
+      media: string,
     }[] | undefined;
     countries: string[];
     categories: string[];
@@ -42,7 +39,7 @@ export const NewsContext = createContext<all | undefined>(undefined)
 
 export const NewsContextProvider:React.FC = ({ children }) => {
   
-    const apiKey = useRef<string>('31a595eff58a46bb8bc63dae6a492be1')
+    const apiKey = useRef<string>('47pDeXYD0wNnEaShxx02m3amo61yc0lOAet9nfBbKE4')
     const [paramQuery, setParamQuery] = useState<string>('')
     const [search, setSearch] = useState<boolean>(false)
     const [morePosts, setMorePosts] = useState<number>(1)
@@ -62,15 +59,16 @@ export const NewsContextProvider:React.FC = ({ children }) => {
                             articlesCountRef, setParamQuery)
 
     const countries = [
-        'all', 'gb', 'us', 'fr', 'de', 'jp', 'ch', 'nl'
+        'gb', 'us', 'fr', 'de', 'jp', 'ch', 'nl'
     ]
 
     const categories = [
-        'all', 'business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'
+      'news', 'sport', 'tech', 'world', 'finance', 'politics', 'business', 'economics', 
+      'entertainment', 'beauty', 'travel', 'music', 'food', 'science', 'gaming', 'energy'
     ]
 
     const sources = [
-        'bbc-news', 'CNN', 'Bild', 'independent', "abc-news", "al-jazeera-english", "associated-press"
+        'bbc.co.uk', 'cnn.com', 'thesun.co.uk', 'nytimes.com', "theguardian.com",  "reuters.com", 'bild.de'
     ]
 
 //scroll to top when new data arrives
@@ -92,7 +90,7 @@ export const NewsContextProvider:React.FC = ({ children }) => {
 //when scrolled to nearly bottom, button to load more posts will show    
     const scrollHandler = (e: React.UIEvent<HTMLUListElement>) => {
       let offset 
-      window.innerWidth < 600 ? offset = 700 : offset = 200
+      window.matchMedia("(max-width: 600px)").matches ? offset = 400 : offset = 200
       if (e.currentTarget.scrollTop - offset >= e.currentTarget.offsetHeight) setShowMore(true)
       else setShowMore(false)
     }

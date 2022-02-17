@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 type Idata = {
-    url: string,
+    link: string,
     title: string,
-    source: {
-    id: string | null,
-    name: string,
-    },
-    urlToImage: string,
+    clean_url: string,
+    media: string,
 }
 
 export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSource: string, clickedCategory: string, 
@@ -19,53 +16,65 @@ export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSou
     //these are parameters, so keep in correct order!
 ) => {
     const [data, setData] = useState<Idata[] | undefined>(undefined)
-    
+
+//on first load
     useEffect(() => {
-        if (!isLoading) setIsLoading(prev => !prev)
         fetchData()
+    }, [])
+    
+//when choosing a filter
+    useEffect(() => {
+        if (( clickedCategory !== '' || clickedCountry!== '' || clickedSource !== '') && !isLoading) {
+            setIsLoading(true)
+            fetchData()
+        }
     }, [clickedCategory, clickedCountry, clickedSource])
 
+//when request a search query or ask for more posts
     useEffect(() => {
-        if (search || morePosts > 0) fetchData()
+        if ((search || morePosts > 1) && !isLoading) {
+            setIsLoading(true)
+            fetchData()
+        }
     }, [search, morePosts])
-
+    
     const fetchData = () => {
-        console.log(paramQuery)
         //last seven days
         const days = new Date(Date.now() - 604800000).toISOString().slice(0,10)
         let params
         let url
-        if (morePosts > 1 && paramsRef) {
+        if (morePosts > 1 && paramsRef.current) {
             //show more posts button clicked, so same url as previous
             params = { ...paramsRef.current, page: morePosts }
+            "when" in paramsRef.current ? url = "https://api.newscatcherapi.com/v2/latest_headlines" : url = "https://api.newscatcherapi.com/v2/search"
         } else {
-            //new request
-            //country and category can mixed as params, source can't. So source and query always go on their own..
-            if (clickedSource !== '' ) params = { sources: clickedSource, from: days }
-            if (clickedCategory !== '') params = { category: clickedCategory, from: days }
-            if (clickedCountry !== '') params = { country: clickedCountry, from: days }
-            if (clickedCountry !== '' && clickedCategory !== '') params = { category: clickedCategory, country: clickedCountry, from: days }
-            if (paramQuery !== '') params = {...params, q: paramQuery }
-            if (params !== undefined) {
-                params = {...params, sortBy: "popularity", page: morePosts }
+            if (paramQuery !== '') {
+                //search query
+                params = { q: '"'+paramQuery+'"', from: days, lang: 'en', to_rank: 10000, page_size: 20 }
             } else {
-                params = { q: 'breaking' }
+                //new request
+                if (clickedSource !== '' ) params = { sources: clickedSource, when: '7d' }
+                if (clickedCategory !== '') params = { topic: clickedCategory, when: '7d' }
+                if (clickedCountry !== '') params = { countries: clickedCountry, when: '7d' }
+                if (clickedCountry !== '' && clickedCategory !== '') params = { topic: clickedCategory, countries: clickedCountry, when: '7d' }
+                params = {...params, page_size: 20, lang: 'en', page: morePosts }
             }
+            paramQuery === '' ? url = "https://api.newscatcherapi.com/v2/latest_headlines" : url = "https://api.newscatcherapi.com/v2/search"
         }
-        if (paramQuery === '' && params) url = "https://newsapi.org/v2/top-headlines"
-        else url = "https://newsapi.org/v2/everything"
         
         axios({
             method: "GET",
             url: url,
             params: params,
-            headers: {"X-Api-Key": apiKey.current} 
+            headers: {  "X-Api-Key": apiKey.current,  
+                        "Access-Control-Allow-Origin": "http://localhost:3000" 
+                    }                 
         })
         .then(response => {
             setData(response.data.articles)
             //save current parameters and amount of articles
             paramsRef.current = response.config.params
-            articlesCountRef.current = response.data.totalResults
+            articlesCountRef.current = response.data.total_hits
         })
         .catch(err => {
             setLoadingError(true)

@@ -48,12 +48,16 @@
                     .menu-item-container{
                         //position every menu item relative so  we can position its child absolute and move it relative to its own parent
                         position: relative;
+
+                        .list-btn{
+                            @include theme('color', 'color-fontThree');
+                        }
                         
                         .checked-container{
                             position: absolute;
                             left: 5px;
                             top: 8px;
-                            @include theme('color', 'color-fontOne');
+                            @include theme('color', 'color-fontThree');
                             @include breakpoint(phablet){
                                 left: 15px;
                             }
@@ -67,7 +71,7 @@
                         
                         & > button{
                             border-radius: 0;
-                            @include theme('background', 'color-backgroundThree');
+                            @include theme('background', 'color-backgroundMenu');
                             
                             @include on-hover{
                                 @include theme('background-color', 'color-backgroundMenuHover')
@@ -172,7 +176,7 @@
     }
 
     main{
-        padding: 0.8em;
+        padding: 0.8em 0.5em;
 //active filters
         & > p{
             text-align: center;
@@ -193,9 +197,10 @@
                 padding: 0.4em;
                 margin: 0.2em 0;
                 border-radius: 4px;
+                height: 5em;
                 display: flex;
                 justify-content: space-between;
-                @include theme('background', 'color-backgroundTwo');
+                @include theme('background', 'color-backgroundThree');
                 pointer-events: none;
 // stop pointer events on parent than enable them on the children where you want it. Than you get the hover effect on the parent when you hover the children.
 
@@ -210,23 +215,67 @@
                     padding-right: 0.9em;
                     pointer-events: auto;
 
+                    @include breakpoint(phablet){
+                        flex: 4;
+                    }
 
                     & > h2 {
-                        font-size: 1em;
+                        height: 4em;
+                        font-size: 0.9em;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
 
                     & > p {
-                        font-size: 0.7em;
+                        font-size: 0.6em;
                     }
                 }
 
                 .img-container {
                     flex: 1;
-                    align-self: center;
-                    height: 70px;
-                    background-size: cover;
-                    border-radius: 4px;
+                    height: 90%;
+                    align-self: center; 
+                    position: relative; 
+                    
+                    .smooth-image{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: 0 30%;
+                        border-radius: 4px;
+                        transition: opacity 1s;
+                        @include theme('color', 'color-fontTwo');
+                        font-size: 0.5em;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .image-visible{
+                        opacity: 1;
+                    }
+
+                    .image-hidden{
+                        opacity: 0;
+                    }
+
+                    .beforeLoad{
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 4px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        @include theme('background-color', 'color-backgroundTwo');
+    
+                        & > span{
+                                @include theme('color', 'color-fontTwo');
+                        }
+                    }
                 }
+
             }
 
             & > p {

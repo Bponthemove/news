@@ -160,6 +160,14 @@ body, html {
   position: relative;
 }
 
+.theme-light .App .header .button-container .dropdown .dropdown-content .menu-item-container .list-btn {
+  color: #FFFFFF;
+}
+
+.theme-dark .App .header .button-container .dropdown .dropdown-content .menu-item-container .list-btn {
+  color: #FFFFFF;
+}
+
 .App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
   position: absolute;
   left: 5px;
@@ -171,7 +179,7 @@ body, html {
 }
 
 .theme-dark .App .header .button-container .dropdown .dropdown-content .menu-item-container .checked-container {
-  color: #00171f;
+  color: #FFFFFF;
 }
 
 @media (min-width: 35em) {
@@ -199,7 +207,7 @@ body, html {
 }
 
 .theme-dark .App .header .button-container .dropdown .dropdown-content > div > button {
-  background: #dee2e6;
+  background: #6c757d;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -329,7 +337,7 @@ body, html {
 }
 
 .App main {
-  padding: 0.8em;
+  padding: 0.8em 0.5em;
 }
 
 .App main > p {
@@ -360,6 +368,7 @@ body, html {
   padding: 0.4em;
   margin: 0.2em 0;
   border-radius: 4px;
+  height: 5em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -370,11 +379,11 @@ body, html {
 }
 
 .theme-light .App main > ul .list-item {
-  background: #FAF9F9;
+  background: #F5F4F4;
 }
 
 .theme-dark .App main > ul .list-item {
-  background: #495057;
+  background: #6c757d;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -403,24 +412,99 @@ body, html {
   color: #FFFFFF;
 }
 
+@media (min-width: 35em) {
+  .App main > ul .list-item .text-container {
+    -webkit-box-flex: 4;
+        -ms-flex: 4;
+            flex: 4;
+  }
+}
+
 .App main > ul .list-item .text-container > h2 {
-  font-size: 1em;
+  height: 4em;
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .App main > ul .list-item .text-container > p {
-  font-size: 0.7em;
+  font-size: 0.6em;
 }
 
 .App main > ul .list-item .img-container {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
+  height: 90%;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-  height: 70px;
-  background-size: cover;
+  position: relative;
+}
+
+.App main > ul .list-item .img-container .smooth-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 0 30%;
+     object-position: 0 30%;
   border-radius: 4px;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  font-size: 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theme-light .App main > ul .list-item .img-container .smooth-image {
+  color: #00171f;
+}
+
+.theme-dark .App main > ul .list-item .img-container .smooth-image {
+  color: #FFFFFF;
+}
+
+.App main > ul .list-item .img-container .image-visible {
+  opacity: 1;
+}
+
+.App main > ul .list-item .img-container .image-hidden {
+  opacity: 0;
+}
+
+.App main > ul .list-item .img-container .beforeLoad {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.theme-light .App main > ul .list-item .img-container .beforeLoad {
+  background-color: #FAF9F9;
+}
+
+.theme-dark .App main > ul .list-item .img-container .beforeLoad {
+  background-color: #495057;
+}
+
+.theme-light .App main > ul .list-item .img-container .beforeLoad > span {
+  color: #00171f;
+}
+
+.theme-dark .App main > ul .list-item .img-container .beforeLoad > span {
+  color: #FFFFFF;
 }
 
 .App main > ul > p {

@@ -19,13 +19,12 @@ export const FilterListButton = ({ option }: { option: string }) => {
                         onClick={ (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                             setClickedSource('')
                             setMorePosts(1)
-                            if (e.currentTarget.id === 'all') setClickedCountry('')
-                            else setClickedCountry(e.currentTarget.id) }
+                            setClickedCountry(e.currentTarget.id) }
                         }
                     >
                         { country }
                     </button>
-                    { (country === 'all' && clickedCountry === '') || clickedCountry === country ?
+                    { clickedCountry === country ?
                         <div className='checked-container'>
                             <FaCheck className='check-icon'/>
                         </div>
@@ -49,7 +48,7 @@ export const FilterListButton = ({ option }: { option: string }) => {
                 >
                     { source }
                 </button>
-                { clickedSource === source || (source === 'All' && clickedSource === '') ? 
+                { clickedSource === source ? 
                     <div className='checked-container'>
                         <FaCheck className='check-icon'/>
                     </div>
@@ -67,13 +66,12 @@ export const FilterListButton = ({ option }: { option: string }) => {
                     onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                         setClickedSource('')
                         setMorePosts(1)
-                        if (e.currentTarget.id === 'all') setClickedCategory('')
-                        else setClickedCategory(e.currentTarget.id) }
+                        setClickedCategory(e.currentTarget.id) }
                     }
                 >
                     { category }
                 </button>
-                { clickedCategory === category || (category === 'all' && clickedCategory === '') ? 
+                { clickedCategory === category ? 
                     <div className='checked-container'>
                         <FaCheck className='check-icon'/>
                     </div>
