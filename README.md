@@ -1,11 +1,21 @@
 A little breaking news ticker, with many thanks to the news catcher api.
 Build with React, sass and typescript.
+
 Consist of
 - light / dark mode
 - options to search and filter
 
 Still needs:
 - placeholder containers for loading. At the moment, the news text is displayed before the image. This results in text being displayed with the previous image still there. It sould load a placeholder instantly and display text and image together after image has loaded.
+
+
+
+
+
+
+
+
+
 
 
 
