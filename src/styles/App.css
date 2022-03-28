@@ -8,7 +8,6 @@
 
 body, html {
   font-family: 'Nunito Sans', sans-serif;
-  width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
@@ -67,8 +66,19 @@ body, html {
   color: #00171f;
 }
 
+#root {
+  height: 100%;
+}
+
 .App {
-  height: 100vh;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .theme-light .App {
@@ -81,8 +91,8 @@ body, html {
 
 @media (min-width: 50em) {
   .App {
-    height: 90vh;
     max-width: 600px;
+    max-height: 90vh;
     margin: 2em auto;
     border-width: 1px;
     border-style: solid;
@@ -337,7 +347,9 @@ body, html {
 }
 
 .App main {
-  padding: 0.8em 0.5em;
+  height: 100%;
+  overflow: hidden;
+  border: 0.8em solid transparent;
 }
 
 .App main > p {
@@ -353,20 +365,26 @@ body, html {
   color: #FFFFFF;
 }
 
-.App main > ul {
-  height: 78vh;
+.App main .list-container {
+  height: 100%;
   overflow-y: auto;
 }
 
-@media (min-width: 35em) {
-  .App main > ul {
-    height: 74vh;
-  }
+.App main .list-container > ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 0.5em;
+  margin-bottom: 2em;
+  gap: 0.6em;
 }
 
-.App main > ul .list-item {
+.App main .list-container > ul .list-item {
   padding: 0.4em;
-  margin: 0.2em 0;
   border-radius: 4px;
   height: 5em;
   display: -webkit-box;
@@ -375,63 +393,60 @@ body, html {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   pointer-events: none;
 }
 
-.theme-light .App main > ul .list-item {
+.theme-light .App main .list-container > ul .list-item {
   background: #F5F4F4;
 }
 
-.theme-dark .App main > ul .list-item {
+.theme-dark .App main .list-container > ul .list-item {
   background: #6c757d;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .theme-light .App main > ul .list-item:hover {
+  .theme-light .App main .list-container > ul .list-item:hover {
     background-color: #f3f5fd;
   }
-  .theme-dark .App main > ul .list-item:hover {
+  .theme-dark .App main .list-container > ul .list-item:hover {
     background-color: #f87b7b;
   }
 }
 
-.App main > ul .list-item .text-container {
+.App main .list-container > ul .list-item .text-container {
   text-decoration: none;
   -webkit-box-flex: 2.75;
       -ms-flex: 2.75;
           flex: 2.75;
+  font-size: 0.9em;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding-right: 0.9em;
   pointer-events: auto;
 }
 
-.theme-light .App main > ul .list-item .text-container {
+.theme-light .App main .list-container > ul .list-item .text-container {
   color: #00171f;
 }
 
-.theme-dark .App main > ul .list-item .text-container {
+.theme-dark .App main .list-container > ul .list-item .text-container {
   color: #FFFFFF;
 }
 
 @media (min-width: 35em) {
-  .App main > ul .list-item .text-container {
+  .App main .list-container > ul .list-item .text-container {
     -webkit-box-flex: 4;
         -ms-flex: 4;
             flex: 4;
   }
 }
 
-.App main > ul .list-item .text-container > h2 {
-  height: 4em;
-  font-size: 0.9em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.App main > ul .list-item .text-container > p {
-  font-size: 0.6em;
-}
-
-.App main > ul .list-item .img-container {
+.App main .list-container > ul .list-item .img-container {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -442,7 +457,7 @@ body, html {
   position: relative;
 }
 
-.App main > ul .list-item .img-container .smooth-image {
+.App main .list-container > ul .list-item .img-container .smooth-image {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -457,23 +472,23 @@ body, html {
   text-overflow: ellipsis;
 }
 
-.theme-light .App main > ul .list-item .img-container .smooth-image {
+.theme-light .App main .list-container > ul .list-item .img-container .smooth-image {
   color: #00171f;
 }
 
-.theme-dark .App main > ul .list-item .img-container .smooth-image {
+.theme-dark .App main .list-container > ul .list-item .img-container .smooth-image {
   color: #FFFFFF;
 }
 
-.App main > ul .list-item .img-container .image-visible {
+.App main .list-container > ul .list-item .img-container .image-visible {
   opacity: 1;
 }
 
-.App main > ul .list-item .img-container .image-hidden {
+.App main .list-container > ul .list-item .img-container .image-hidden {
   opacity: 0;
 }
 
-.App main > ul .list-item .img-container .beforeLoad {
+.App main .list-container > ul .list-item .img-container .beforeLoad {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -491,40 +506,40 @@ body, html {
           align-items: center;
 }
 
-.theme-light .App main > ul .list-item .img-container .beforeLoad {
+.theme-light .App main .list-container > ul .list-item .img-container .beforeLoad {
   background-color: #FAF9F9;
 }
 
-.theme-dark .App main > ul .list-item .img-container .beforeLoad {
+.theme-dark .App main .list-container > ul .list-item .img-container .beforeLoad {
   background-color: #495057;
 }
 
-.theme-light .App main > ul .list-item .img-container .beforeLoad > span {
+.theme-light .App main .list-container > ul .list-item .img-container .beforeLoad > span {
   color: #00171f;
 }
 
-.theme-dark .App main > ul .list-item .img-container .beforeLoad > span {
+.theme-dark .App main .list-container > ul .list-item .img-container .beforeLoad > span {
   color: #FFFFFF;
 }
 
-.App main > ul > p {
+.App main .list-container > ul > p {
   text-align: center;
   font-size: 2em;
 }
 
-.theme-light .App main > ul > p {
+.theme-light .App main .list-container > ul > p {
   color: #00171f;
 }
 
-.theme-dark .App main > ul > p {
+.theme-dark .App main .list-container > ul > p {
   color: #FFFFFF;
 }
 
-.theme-light .App main > ul > li:nth-child(2n+1) {
+.theme-light .App main .list-container > ul > li:nth-child(2n+1) {
   background-color: #FFFFFF;
 }
 
-.theme-dark .App main > ul > li:nth-child(2n+1) {
+.theme-dark .App main .list-container > ul > li:nth-child(2n+1) {
   background-color: #00171f;
 }
 
@@ -540,6 +555,7 @@ body, html {
   left: 0px;
   bottom: 0px;
   height: 0;
+  margin: 1em;
   overflow: hidden;
   -webkit-transition: height 0s;
   transition: height 0s;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FilterListButton } from './FilterListButton'
 
 export const FilterButton = () => {
-    const filterOptions: string[] = ['country', 'source', 'category']
+    const filterOptions: string[] = ['country', 'category']
     const [clicked, setClicked] = useState(false)
     const [id, setId] = useState('')
 

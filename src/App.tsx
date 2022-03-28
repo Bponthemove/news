@@ -8,7 +8,7 @@ import { ListItem } from './components/ListItem';
 export const App = () => {
   
   const { paramQuery, setParamQuery, searchHandler, data, isLoading, loadingError, showMore, ulRef, articlesCountRef,
-          errorMsg, clickedCountry, clickedSource, clickedCategory, scrollHandler, morePostsHandler, morePosts } = useNewsContext()
+          errorMsg, clickedCountry, clickedCategory, scrollHandler, morePostsHandler, morePosts } = useNewsContext()
           
   return (
     <div className="App">
@@ -34,26 +34,27 @@ export const App = () => {
         </form>
       </div>
       <main>
-{/* Current filters */}
-        <p> Country: { clickedCountry !== '' ? clickedCountry : 'none' }. 
-            Source: { clickedSource !== '' ? clickedSource : 'none' }. 
-            Category: { clickedCategory !== '' ? clickedCategory : 'none' }.</p>
-{/* News List */}
-        <ul onScroll={ scrollHandler } ref={ ulRef } >
-          { data && data.length !== 0 && !loadingError && !isLoading ? data.map((news, index) => <ListItem key={ index } news={ news }/> ) 
-                  : isLoading ? <p>Loading</p>
-                  : loadingError ?  <p>{ errorMsg }</p>
-                  : <p>No news found!</p> }
-        </ul>
-{/* Button to appear when scrolled to bottom */}
-        <div className={ showMore ? 'more-posts-btn-container show-btn' : 'more-posts-btn-container' }>
-          <button 
-            className='more-posts-btn button button-big button-red' 
-            onClick={ morePostsHandler } 
-          >
-            { morePosts * 20 < articlesCountRef.current ? <p>more posts<br/><span>&gt;</span></p> : <p>no more news</p>}
-          </button>
-        </div>
+  {/* Current filters */}
+          <p> Country: { clickedCountry !== '' ? clickedCountry : 'none' }. 
+              Category: { clickedCategory !== '' ? clickedCategory : 'none' }.</p>
+  {/* News List */}
+        <div onScroll={ scrollHandler } className='list-container'>
+            <ul ref={ ulRef } >
+              { data && data.length !== 0 && !loadingError && !isLoading ? data.map((news, index) => <ListItem key={ index } news={ news }/> ) 
+                      : isLoading ? <p>Loading</p>
+                      : loadingError ?  <p>{ errorMsg }</p>
+                      : <p>No news found!</p> }
+            </ul>
+          </div>
+  {/* Button to appear when scrolled to bottom */}
+          <div className={ showMore ? 'more-posts-btn-container show-btn' : 'more-posts-btn-container' }>
+            <button 
+              className='more-posts-btn button button-big button-red' 
+              onClick={ morePostsHandler } 
+            >
+              { morePosts * 20 < articlesCountRef.current ? <p>more posts<br/><span>&gt;</span></p> : <p>no more news</p>}
+            </button>
+          </div>
       </main>
     </div>
   );

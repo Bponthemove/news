@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Idata } from '../context/NewsContext'
 
-type Idata = {
-    link: string,
-    title: string,
-    clean_url: string,
-    media: string,
-}
 
-export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSource: string, clickedCategory: string, 
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, apiKey: React.MutableRefObject<string>, 
-    setLoadingError: React.Dispatch<React.SetStateAction<boolean>>, setErrorMsg: React.Dispatch<React.SetStateAction<string>>,
-    paramQuery: string, search: boolean, setSearch: React.Dispatch<React.SetStateAction<boolean>>, morePosts: number, 
-    paramsRef: {current: object | null}, articlesCountRef: {current: number}, setParamQuery: React.Dispatch<React.SetStateAction<string>>
+
+export const useAxios = ( 
+    isLoading: boolean, 
+    clickedCountry: string, 
+    clickedCategory: string, 
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, 
+    apiKey: React.MutableRefObject<string>, 
+    setLoadingError: React.Dispatch<React.SetStateAction<boolean>>, 
+    setErrorMsg: React.Dispatch<React.SetStateAction<string>>,
+    paramQuery: string, search: boolean, 
+    setSearch: React.Dispatch<React.SetStateAction<boolean>>, 
+    morePosts: number, 
+    paramsRef: {current: object | null}, 
+    articlesCountRef: {current: number}, 
+    setParamQuery: React.Dispatch<React.SetStateAction<string>>
     //these are parameters, so keep in correct order!
 ) => {
     const [data, setData] = useState<Idata[] | undefined>(undefined)
@@ -24,11 +29,11 @@ export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSou
     
 //when choosing a filter
     useEffect(() => {
-        if (( clickedCategory !== '' || clickedCountry!== '' || clickedSource !== '') && !isLoading) {
+        if (( clickedCategory !== '' || clickedCountry!== '') && !isLoading) {
             setIsLoading(true)
             fetchData()
         }
-    }, [clickedCategory, clickedCountry, clickedSource])
+    }, [clickedCategory, clickedCountry])
 
 //when request a search query or ask for more posts
     useEffect(() => {
@@ -39,36 +44,37 @@ export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSou
     }, [search, morePosts])
     
     const fetchData = () => {
-        //last seven days
-        const days = new Date(Date.now() - 604800000).toISOString().slice(0,10)
+        
+        const days = new Date(Date.now() - (86400000 * 3)).toISOString()
         let params
         let url
         if (morePosts > 1 && paramsRef.current) {
-            //show more posts button clicked, so same url as previous
+            //show more posts button clicked, so same url including params as previous, just change morePosts to paginate
             params = { ...paramsRef.current, page: morePosts }
-            "when" in paramsRef.current ? url = "https://api.newscatcherapi.com/v2/latest_headlines" : url = "https://api.newscatcherapi.com/v2/search"
-        } else {
+            "when" in paramsRef.current ? url = `https://gnews.io/api/v4/top-headlines?token=${apiKey.current}` : url = `https://gnews.io/api/v4/search?token=${apiKey.current}`
+        } 
+        else {
             if (paramQuery !== '') {
                 //search query
-                params = { q: '"'+paramQuery+'"', from: days, lang: 'en', to_rank: 10000, page_size: 20 }
-            } else {
-                //new request
-                if (clickedSource !== '' ) params = { sources: clickedSource, when: '7d' }
-                if (clickedCategory !== '') params = { topic: clickedCategory, when: '7d' }
-                if (clickedCountry !== '') params = { countries: clickedCountry, when: '7d' }
-                if (clickedCountry !== '' && clickedCategory !== '') params = { topic: clickedCategory, countries: clickedCountry, when: '7d' }
-                params = {...params, page_size: 20, lang: 'en', page: morePosts }
+                params = { q: '"'+paramQuery+'"', from: days, lang: 'en', max: 10 }
+            } 
+            else if (clickedCountry === 'all' && clickedCategory === 'all') {
+                params = { from: days, lang: 'en' }
             }
-            paramQuery === '' ? url = "https://api.newscatcherapi.com/v2/latest_headlines" : url = "https://api.newscatcherapi.com/v2/search"
+            else {
+                //new request
+                if (clickedCountry !== 'all' && clickedCategory !== 'all') params = { topic: clickedCategory, country: clickedCountry, from: days }
+                if (clickedCategory !== 'all') params = { topic: clickedCategory, from: days }
+                if (clickedCountry !== 'all') params = { country: clickedCountry, from: days }
+                params = {...params, max: 10 }
+            }
+            paramQuery === '' ? url = `https://gnews.io/api/v4/top-headlines?token=${apiKey.current}` : url = `https://gnews.io/api/v4/search?token=${apiKey.current}`
         }
         
         axios({
             method: "GET",
             url: url,
-            params: params,
-            headers: {  "X-Api-Key": apiKey.current,  
-                        "Access-Control-Allow-Origin": "http://localhost:3000" 
-                    }                 
+            params: params,              
         })
         .then(response => {
             setData(response.data.articles)
@@ -80,10 +86,11 @@ export const useAxios = ( isLoading: boolean, clickedCountry: string, clickedSou
             setLoadingError(true)
             setErrorMsg(err.response.data.message) 
         })
-        if (paramQuery !== '') setParamQuery('')
-        if (search) setSearch(false)
-        setIsLoading(false)
+        .finally(() => {
+            if (paramQuery !== '') setParamQuery('')
+            if (search) setSearch(false)
+            setIsLoading(false)
+        })
     }  
-
     return data
 }
